@@ -10,6 +10,8 @@ class TodoList
     end
       $report_file = File.new("newlist.txt", "w+") #new file with wright permission
 
+
+      #-------------------- Start Add ---------------------#
       # adds new item with time due as options
       def add_item(new_item, options = {})
         new_item = Item.new(new_item.capitalize)
@@ -26,6 +28,9 @@ class TodoList
           @items.push(new_item)
       end
 
+      # --------------------- End Add ----------------#
+
+      #---------------------Start validations --------------#
       # see if item with description exist
       def is_item_with_description_exist(new_item)
           item_found = @items.find{|item| item.description == new_item }
@@ -41,6 +46,35 @@ class TodoList
         end
       end
 
+      def index_exist(index_no)
+        @items.length >= index_no - 1
+      end
+      #---------------------End validations --------------#
+
+      #-------------- Stard Delete ----------------#
+      def clear_item(delete_item)
+        @items.empty?? conf_message(delete_item, "does not exist") : item_delete(delete_item)
+      end
+
+      def item_delete(delete_item)
+        @items.delete_if {|e| e.description == delete_item.capitalize}
+         conf_message(delete_item, "removed")
+      end
+
+      def remove_item(index_no)
+        index_exist(index_no)? exist_index_remove_item(index_no) :  conf_message(index_no, "does not exist")
+      end
+
+      def exist_index_remove_item(index_no)
+        index_no -= 1
+        @r_item = @items[index_no].description
+        @items.delete_at(index_no)
+        conf_message(@r_item, "removed")
+      end
+      #-------------- End Delete ----------------#
+
+
+
       # conferm message of the actions
       def conf_message(idescription, message)
         print_line
@@ -48,6 +82,8 @@ class TodoList
         print_line
       end
 
+
+      #------------------ Start print  --------------------#
       # Prints header
       def print_header
         "#{"Sl."} #{"Description".ljust(20)} #{"Created time".ljust(10)}  #{"Due by".ljust(10)} #{"Status"}"
@@ -94,6 +130,7 @@ class TodoList
       def print_line
            "-" * 60
       end
+      #------------------ End print  --------------------#
 end
 
 class Item
