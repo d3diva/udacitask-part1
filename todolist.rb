@@ -1,14 +1,14 @@
 class TodoList
-    # methods and stuff go here
-    attr_accessor :title, :items
+      # methods and stuff go here
+      attr_accessor :title, :items
 
-    # Initialize todo list with a title and no items
-    def initialize(list_title)
-      @title = list_title
-      @items = Array.new # Starts empty! No Items yet!
-      @tdate = Time.now.strftime("%m/%d/%Y") # Todays' Date
-    end
-      $report_file = File.new("newlist.txt", "w+") #new file with wright permission
+      # Initialize todo list with a title and no items
+      def initialize(list_title)
+        @title = list_title
+        @items = Array.new # Starts empty! No Items yet!
+        @tdate = Time.now.strftime("%m/%d/%Y") # Todays' Date
+      end
+        $report_file = File.new("newlist.txt", "w+") #new file with wright permission
 
 
       #-------------------- Start Add ---------------------#
@@ -189,6 +189,12 @@ class Item
        @completed_status = false
        @created_time = Time.now.strftime("%H:%M") #Time now
        @due_time = (Time.now + 18000).strftime("%H:%M") # TIme now = 5hrs
+    end
+
+    # toggles completed status of the item
+    def update_status
+      @completed_status = !completed_status
+      puts "#{description} Completed"
     end
 
     # prints items details
