@@ -91,8 +91,36 @@ class TodoList
       end
       #-------------- End change status ---------#
 
+      # ----------------- Start change title -----#
+      # Change the title of the list
+      def retitle(retitle)
+        @o_title = title
+        @title = retitle.upcase
+        conf_message(@o_title, "retitled")
+      end
+      # ----------------- End change title -----#
 
-      # conferm message of the actions
+      # -------------------- Start change item description --------- #
+      #  Change Item description
+      def rename_item(index_no, rename)
+        index_exist(index_no)? index_exist_rename(index_no, rename) : conf_message(index_no, "does not exist")
+      end
+
+      # verifies if same description exists
+      def index_exist_rename(index_no, rename)
+        item_exist(rename)? conf_message(rename, "already Exists") : exist_item_remane(index_no, rename)
+      end
+
+      # changes description of item
+      def exist_item_remane(index_no, rename)
+        index_no -= 1
+        @o_description = @items[index_no].description
+        @items[index_no].description = rename.capitalize
+        conf_message(@o_description, "replaced")
+      end
+      # -------------------- End change item description --------- #
+
+      # confirm message of the actions
       def conf_message(idescription, message)
         print_line
         puts "#{idescription} #{message}"
@@ -159,8 +187,8 @@ class Item
     def initialize(item_description)
        @description = item_description
        @completed_status = false
-       @created_time = Time.now.strftime("%H:%M")
-       @due_time = (Time.now + 18000).strftime("%H:%M")
+       @created_time = Time.now.strftime("%H:%M") #Time now
+       @due_time = (Time.now + 18000).strftime("%H:%M") # TIme now = 5hrs
     end
 
     # prints items details
@@ -172,7 +200,4 @@ class Item
     def task_complete?
       @completed_status
     end
-
-
-
 end
