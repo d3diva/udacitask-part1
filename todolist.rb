@@ -52,19 +52,23 @@ class TodoList
       #---------------------End validations --------------#
 
       #-------------- Stard Delete ----------------#
+      # clears item by description from the list with validations
       def clear_item(delete_item)
         @items.empty?? conf_message(delete_item, "does not exist") : item_delete(delete_item)
       end
 
+      # deletes item from the list if found
       def item_delete(delete_item)
         @items.delete_if {|e| e.description == delete_item.capitalize}
          conf_message(delete_item, "removed")
       end
 
+      # removes by index form the list with validations
       def remove_item(index_no)
         index_exist(index_no)? exist_index_remove_item(index_no) :  conf_message(index_no, "does not exist")
       end
 
+      # deletes item from the list if found
       def exist_index_remove_item(index_no)
         index_no -= 1
         @r_item = @items[index_no].description
@@ -73,6 +77,19 @@ class TodoList
       end
       #-------------- End Delete ----------------#
 
+
+      #-------------- Start change status ---------#
+      # Chanage status of item with validations
+      def change_status(index_no)
+        index_exist(index_no)? index_change_status(index_no) :  conf_message(index_no, "does not exist")
+      end
+
+      # Change status
+      def index_change_status(index_no)
+        index_no -= 1
+        items[index_no].update_status
+      end
+      #-------------- End change status ---------#
 
 
       # conferm message of the actions

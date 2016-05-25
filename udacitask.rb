@@ -25,8 +25,10 @@ list.remove_item 2 # with with item number as in the print list
 list.print_items
 
 # Update the completion status of the first item to complete
+list.change_status 1 # toggles status
 
 # Print the list
+list.print_items
 
 # Update the title of the list
 
